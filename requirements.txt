@@ -1,2 +1,8 @@
 pyramid==1.5.7
+pyramid_rewrite==0.2
+pyramid_tm==0.9
 
+#sqlalchemy
+SQLAlchemy==1.0.2
+zope.sqlalchemy==0.7.5
+psycopg2==2.5.4

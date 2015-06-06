@@ -2,8 +2,7 @@ from pyramid.response import Response
 from pyramid.view import view_config
 
 from sqlalchemy.exc import DBAPIError
-
-from .models import (
+from kubb_match.data.models import (
     DBSession,
     MyModel,
     )
