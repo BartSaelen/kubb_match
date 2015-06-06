@@ -58,4 +58,6 @@ target/
 # idea / pycharm
 .idea
 
+*.sqlite
+
 

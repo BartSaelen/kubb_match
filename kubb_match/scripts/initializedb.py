@@ -6,12 +6,10 @@ from pyramid.paster import (
     setup_logging,
     )
 from pyramid.scripts.common import parse_vars
-
-import transaction
 from sqlalchemy import engine_from_config
+
 from kubb_match.data.models import (
     DBSession,
-    MyModel,
     Base,
     )
 
@@ -32,7 +30,6 @@ def main(argv=sys.argv):
     settings = get_appsettings(config_uri, options=options)
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind=engine)
+    Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
-    with transaction.manager:
-        model = MyModel(name='one', value=1)
-        DBSession.add(model)
+
