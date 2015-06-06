@@ -1,6 +1,7 @@
 from sqlalchemy import (
     Column,
     Integer,
+    Boolean,
     Text,
     String, ForeignKey)
 
@@ -8,8 +9,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 from sqlalchemy.orm import (
     scoped_session,
-    sessionmaker,
-    relationship)
+    sessionmaker)
 
 from zope.sqlalchemy import ZopeTransactionExtension
 
@@ -22,15 +22,26 @@ class Phase(Base):
     id = Column(Integer, primary_key=True)
     name = Column(Text)
 
+
 class GridPosition(Base):
     __tablename__ = 'grid_positions'
-    position =Column(String(), primary_key=True)
+    id = Column(Integer, primary_key=True)
+    position = Column(String())
+    team_id = Column(Integer, ForeignKey('team.id'))
+
+
+class KOPosition(Base):
+    __tablename__ = 'ko_positions'
+    id = Column(Integer, primary_key=True)
+    same_position = Column(Integer)
+    position = Column(Integer)
     team_id = Column(Integer, ForeignKey('team.id'))
 
 
 class Round(Base):
     __tablename__ = 'rounds'
     id = Column(Integer, primary_key=True)
+    final = Column(Boolean())
 
 
 class Game(Base):

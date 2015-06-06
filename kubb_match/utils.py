@@ -14,12 +14,20 @@ def grid_printer(positions):
     print('-' * nr * 5)
 
 
+def ko_position_printer(positions):
+    print('-' * 15)
+    for pos in positions:
+        print(pos.team_id, pos.position)
+    print('-' * 15)
+
+
 def print_round(round):
-    for game in round.games:
-        print(str(game.team1_id) + ' - ' + str(game.team2_id))
+    if hasattr(round, 'games'):
+        for game in round.games:
+            print(str(game.team1_id) + ' - ' + str(game.team2_id))
 
 
 def print_round_results(round):
-    for game in round.games:
-        print(str(game.team1_id) + ' - ' + str(game.team2_id) + ' | ' + str(game.winner))
-
+    if hasattr(round, 'games'):
+        for game in round.games:
+            print(str(game.team1_id) + ' - ' + str(game.team2_id) + ' | ' + str(game.winner))
