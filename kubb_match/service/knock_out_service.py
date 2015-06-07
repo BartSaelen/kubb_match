@@ -16,46 +16,42 @@ class KnockOutService(object):
         d_games = []
         d_positions = []
         nr = int(len(final_battle_positions) / 5)
-        for row in ('A', 'B'):
-            for x in range(1, nr + 1, 2):
-                team1 = next((pos for pos in final_battle_positions if pos.position == row + str(x)))
-                team2 = next((pos for pos in final_battle_positions if pos.position == row + str(x + 1)))
-                game = Game(team1_id=team1.team_id, team2_id=team2.team_id)
-                a_games.append(game)
-                position1 = KOPosition(team_id=team1.team_id, position=16, same_position=16)
-                position2 = KOPosition(team_id=team2.team_id, position=16, same_position=16)
-                a_positions.append(position1)
-                a_positions.append(position2)
-        for row in ('C'):
-            for x in range(1, nr + 1, 2):
-                team1 = next((pos for pos in final_battle_positions if pos.position == row + str(x)))
-                team2 = next((pos for pos in final_battle_positions if pos.position == row + str(x + 1)))
-                game = Game(team1_id=team1.team_id, team2_id=team2.team_id)
-                b_games.append(game)
-                position1 = KOPosition(team_id=team1.team_id, position=24, same_position=8)
-                position2 = KOPosition(team_id=team2.team_id, position=24, same_position=8)
-                b_positions.append(position1)
-                b_positions.append(position2)
-        for row in ('D'):
-            for x in range(1, nr + 1, 2):
-                team1 = next((pos for pos in final_battle_positions if pos.position == row + str(x)))
-                team2 = next((pos for pos in final_battle_positions if pos.position == row + str(x + 1)))
-                game = Game(team1_id=team1.team_id, team2_id=team2.team_id)
-                c_games.append(game)
-                position1 = KOPosition(team_id=team1.team_id, position=32, same_position=8)
-                position2 = KOPosition(team_id=team2.team_id, position=32, same_position=8)
-                c_positions.append(position1)
-                c_positions.append(position2)
-        for row in ('E'):
-            for x in range(1, nr + 1, 2):
-                team1 = next((pos for pos in final_battle_positions if pos.position == row + str(x)))
-                team2 = next((pos for pos in final_battle_positions if pos.position == row + str(x + 1)))
-                game = Game(team1_id=team1.team_id, team2_id=team2.team_id)
-                d_games.append(game)
-                position1 = KOPosition(team_id=team1.team_id, position=40, same_position=8)
-                position2 = KOPosition(team_id=team2.team_id, position=40, same_position=8)
-                d_positions.append(position1)
-                d_positions.append(position2)
+        for x in range(1, nr + 1, 1):
+            team1 = next((pos for pos in final_battle_positions if pos.position == 'A' + str(x)))
+            team2 = next((pos for pos in final_battle_positions if pos.position == 'B' + str(x)))
+            game = Game(team1_id=team1.team_id, team2_id=team2.team_id)
+            a_games.append(game)
+            position1 = KOPosition(team_id=team1.team_id, position=16, same_position=16)
+            position2 = KOPosition(team_id=team2.team_id, position=16, same_position=16)
+            a_positions.append(position1)
+            a_positions.append(position2)
+        for x in range(1, nr + 1, 2):
+            team1 = next((pos for pos in final_battle_positions if pos.position == 'C' + str(x)))
+            team2 = next((pos for pos in final_battle_positions if pos.position == 'C' + str(x + 1)))
+            game = Game(team1_id=team1.team_id, team2_id=team2.team_id)
+            b_games.append(game)
+            position1 = KOPosition(team_id=team1.team_id, position=24, same_position=8)
+            position2 = KOPosition(team_id=team2.team_id, position=24, same_position=8)
+            b_positions.append(position1)
+            b_positions.append(position2)
+        for x in range(1, nr + 1, 2):
+            team1 = next((pos for pos in final_battle_positions if pos.position == 'D' + str(x)))
+            team2 = next((pos for pos in final_battle_positions if pos.position == 'D' + str(x + 1)))
+            game = Game(team1_id=team1.team_id, team2_id=team2.team_id)
+            c_games.append(game)
+            position1 = KOPosition(team_id=team1.team_id, position=32, same_position=8)
+            position2 = KOPosition(team_id=team2.team_id, position=32, same_position=8)
+            c_positions.append(position1)
+            c_positions.append(position2)
+        for x in range(1, nr + 1, 2):
+            team1 = next((pos for pos in final_battle_positions if pos.position == 'E' + str(x)))
+            team2 = next((pos for pos in final_battle_positions if pos.position == 'E' + str(x + 1)))
+            game = Game(team1_id=team1.team_id, team2_id=team2.team_id)
+            d_games.append(game)
+            position1 = KOPosition(team_id=team1.team_id, position=40, same_position=8)
+            position2 = KOPosition(team_id=team2.team_id, position=40, same_position=8)
+            d_positions.append(position1)
+            d_positions.append(position2)
         a_round = Round()
         a_round.games = a_games
         a_round.positions = a_positions
