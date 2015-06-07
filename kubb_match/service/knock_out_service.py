@@ -18,8 +18,8 @@ class KnockOutService(object):
         nr = int(len(final_battle_positions) / 5)
         for row in ('A', 'B'):
             for x in range(1, nr + 1, 2):
-                team1 = final_battle_positions[row + str(x)]
-                team2 = final_battle_positions[row + str(x + 1)]
+                team1 = next((pos for pos in final_battle_positions if pos.position == row + str(x)))
+                team2 = next((pos for pos in final_battle_positions if pos.position == row + str(x + 1)))
                 game = Game(team1_id=team1.team_id, team2_id=team2.team_id)
                 a_games.append(game)
                 position1 = KOPosition(team_id=team1.team_id, position=16, same_position=16)
@@ -28,8 +28,8 @@ class KnockOutService(object):
                 a_positions.append(position2)
         for row in ('C'):
             for x in range(1, nr + 1, 2):
-                team1 = final_battle_positions[row + str(x)]
-                team2 = final_battle_positions[row + str(x + 1)]
+                team1 = next((pos for pos in final_battle_positions if pos.position == row + str(x)))
+                team2 = next((pos for pos in final_battle_positions if pos.position == row + str(x + 1)))
                 game = Game(team1_id=team1.team_id, team2_id=team2.team_id)
                 b_games.append(game)
                 position1 = KOPosition(team_id=team1.team_id, position=24, same_position=8)
@@ -38,8 +38,8 @@ class KnockOutService(object):
                 b_positions.append(position2)
         for row in ('D'):
             for x in range(1, nr + 1, 2):
-                team1 = final_battle_positions[row + str(x)]
-                team2 = final_battle_positions[row + str(x + 1)]
+                team1 = next((pos for pos in final_battle_positions if pos.position == row + str(x)))
+                team2 = next((pos for pos in final_battle_positions if pos.position == row + str(x + 1)))
                 game = Game(team1_id=team1.team_id, team2_id=team2.team_id)
                 c_games.append(game)
                 position1 = KOPosition(team_id=team1.team_id, position=32, same_position=8)
@@ -48,8 +48,8 @@ class KnockOutService(object):
                 c_positions.append(position2)
         for row in ('E'):
             for x in range(1, nr + 1, 2):
-                team1 = final_battle_positions[row + str(x)]
-                team2 = final_battle_positions[row + str(x + 1)]
+                team1 = next((pos for pos in final_battle_positions if pos.position == row + str(x)))
+                team2 = next((pos for pos in final_battle_positions if pos.position == row + str(x + 1)))
                 game = Game(team1_id=team1.team_id, team2_id=team2.team_id)
                 d_games.append(game)
                 position1 = KOPosition(team_id=team1.team_id, position=40, same_position=8)

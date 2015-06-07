@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from kubb_match.data.models import Game, GridPosition, Round
 
 
 def grid_printer(positions):
@@ -9,7 +8,8 @@ def grid_printer(positions):
         row_string = row + ' | '
         for x in range(1, nr + 1):
             key = row + str(x)
-            row_string = row_string + str(positions[key].team_id) + ' | '
+            pos = next((pos for pos in positions if pos.position == key))
+            row_string = row_string + str(pos.team_id) + ' | '
         print(row_string)
     print('-' * nr * 5)
 

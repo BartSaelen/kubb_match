@@ -8,12 +8,9 @@ from sqlalchemy import (
 from sqlalchemy.ext.declarative import declarative_base
 
 from sqlalchemy.orm import (
-    scoped_session,
-    sessionmaker, relationship)
+    relationship)
+from sqlalchemy.orm.collections import attribute_mapped_collection
 
-from zope.sqlalchemy import ZopeTransactionExtension
-
-DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 Base = declarative_base()
 
 
@@ -30,7 +27,7 @@ class Position(Base):
     }
 
 
-class GridPosition(Base):
+class GridPosition(Position):
     __tablename__ = 'grid_positions'
     id = Column(Integer, ForeignKey('positions.id'), primary_key=True)
     position = Column(String())
@@ -40,7 +37,7 @@ class GridPosition(Base):
     }
 
 
-class KOPosition(Base):
+class KOPosition(Position):
     __tablename__ = 'ko_positions'
     id = Column(Integer, ForeignKey('positions.id'), primary_key=True)
     same_position = Column(Integer)
@@ -72,4 +69,3 @@ class Team(Base):
     __tablename__ = 'teams'
     id = Column(Integer, primary_key=True)
     name = Column(Text)
-    games = relationship("Game")

@@ -1,36 +1,50 @@
 # -*- coding: utf-8 -*-
+import os
 import unittest
-from kubb_match.data.data_managers import GameDataManager
-from kubb_match.data.models import Phase, Team, Round, GridPosition
+from paste.deploy import appconfig
+from sqlalchemy import engine_from_config
+from sqlalchemy.orm import scoped_session, sessionmaker
+from zope.sqlalchemy import ZopeTransactionExtension
+from kubb_match.data.data_managers import DataManager
+from kubb_match.data.models import Team, Round, GridPosition, Base
 from kubb_match.service.battle_service import BattleService
 from kubb_match.service.knock_out_service import KnockOutService
 from kubb_match.utils import print_round, print_round_results, grid_printer, ko_position_printer
 
 
+TEST_DIR = os.path.dirname(__file__)
+
+settings = appconfig('config:' + os.path.join(TEST_DIR, 'test.ini'))
+
 class TempTests(unittest.TestCase):
+
     def setUp(self):
-        self.data_manager = GameDataManager()
+        engine = engine_from_config(settings, 'sqlalchemy.')
+        self.session = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
+        self.session.configure(bind=engine)
+        Base.metadata.bind = engine
+        Base.metadata.drop_all(engine)
+        Base.metadata.create_all(engine)
+        self.data_manager = DataManager(self.session)
         self.battle_service = BattleService()
         self.knock_out_service = KnockOutService()
 
     def test(self):
-        phase = Phase()
-        phase.name = "battle"
 
         round1 = Round()
 
-        positions = {}
+        positions = []
         t = 1
         for row in ('A', 'B', 'C', 'D', 'E'):
             for x in range(1, 9):
                 key = row + str(x)
                 name = 'team {0}'.format(t)
                 team = Team(id=t, name=name)
+                self.data_manager.save(team)
                 grid_pos = GridPosition(position=key, team_id=team.id)
                 grid_pos.team = team
-                self.data_manager.teams[t] = team
                 t += 1
-                positions[key] = grid_pos
+                positions.append(grid_pos)
 
         round1.positions = positions
 
@@ -40,6 +54,8 @@ class TempTests(unittest.TestCase):
         print()
 
         round1.games = self.battle_service.create_games(positions)
+
+        self.data_manager.save(round1)
 
         print_round(round1)
 
@@ -56,6 +72,7 @@ class TempTests(unittest.TestCase):
         print()
         print()
         print_round_results(round1)
+        self.data_manager.save(round1)
 
         print()
         print()
