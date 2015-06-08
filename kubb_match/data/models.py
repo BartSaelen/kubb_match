@@ -16,7 +16,7 @@ Base = declarative_base()
 
 class Position(Base):
     __tablename__ = 'positions'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     round_id = Column(Integer, ForeignKey('rounds.id'))
     team_id = Column(Integer, ForeignKey('teams.id'))
     type = Column(String(50))
@@ -29,7 +29,7 @@ class Position(Base):
 
 class GridPosition(Position):
     __tablename__ = 'grid_positions'
-    id = Column(Integer, ForeignKey('positions.id'), primary_key=True)
+    id = Column(Integer, ForeignKey('positions.id'), primary_key=True, autoincrement=True)
     position = Column(String())
 
     __mapper_args__ = {
@@ -39,7 +39,7 @@ class GridPosition(Position):
 
 class KOPosition(Position):
     __tablename__ = 'ko_positions'
-    id = Column(Integer, ForeignKey('positions.id'), primary_key=True)
+    id = Column(Integer, ForeignKey('positions.id'), primary_key=True, autoincrement=True)
     same_position = Column(Integer)
     position = Column(Integer)
 
@@ -50,7 +50,7 @@ class KOPosition(Position):
 
 class Round(Base):
     __tablename__ = 'rounds'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     final = Column(Boolean())
     games = relationship("Game")
     positions = relationship("Position")
@@ -58,7 +58,7 @@ class Round(Base):
 
 class Game(Base):
     __tablename__ = 'games'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     team1_id = Column(Integer, ForeignKey('teams.id'))
     team2_id = Column(Integer, ForeignKey('teams.id'))
     round_id = Column(Integer, ForeignKey('rounds.id'))
@@ -67,5 +67,5 @@ class Game(Base):
 
 class Team(Base):
     __tablename__ = 'teams'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(Text)

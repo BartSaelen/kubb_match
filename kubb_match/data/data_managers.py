@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from kubb_match.data.models import Team
 
 
 class DataManager(object):
@@ -17,6 +18,12 @@ class DataManager(object):
         :param advies: het te bewaren advies
         :return: het bewaarde advies
         '''
-        object = self.session.add(object)
+        self.session.add(object)
         self.session.flush()
         return object
+
+    def get_teams(self):
+        return self.session.query(Team).all()
+
+    def get_team(self, team_id):
+        return self.session.query(Team).get(team_id)
