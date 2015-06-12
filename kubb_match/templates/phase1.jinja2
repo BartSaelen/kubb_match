@@ -1,0 +1,79 @@
+{% extends 'base.jinja2' %}
+
+{% block html_title %}voormiddag{% endblock %}
+
+{% from "macros.jinja2" import
+	render_winner
+%}
+
+{% block content %}
+<p>
+    <h2>Huidige stand:</h2>
+
+    <table>
+        <tr>
+            <td class="head_col">A</td>
+            <td>{{ position_data['A1'].team.name }}</td>
+            <td>{{ position_data['A2'].team.name }}</td>
+            <td>{{ position_data['A3'].team.name }}</td>
+            <td>{{ position_data['A4'].team.name }}</td>
+            <td>{{ position_data['A5'].team.name }}</td>
+            <td>{{ position_data['A6'].team.name }}</td>
+            <td>{{ position_data['A7'].team.name }}</td>
+            <td>{{ position_data['A8'].team.name }}</td>
+        </tr>
+        <tr>
+            <td class="head_col">B</td>
+            <td>{{ position_data['B1'].team.name }}</td>
+            <td>{{ position_data['B2'].team.name }}</td>
+            <td>{{ position_data['B3'].team.name }}</td>
+            <td>{{ position_data['B4'].team.name }}</td>
+            <td>{{ position_data['B5'].team.name }}</td>
+            <td>{{ position_data['B6'].team.name }}</td>
+            <td>{{ position_data['B7'].team.name }}</td>
+            <td>{{ position_data['B8'].team.name }}</td>
+        </tr>
+        <tr>
+            <td class="head_col">C</td>
+            <td>{{ position_data['C1'].team.name }}</td>
+            <td>{{ position_data['C2'].team.name }}</td>
+            <td>{{ position_data['C3'].team.name }}</td>
+            <td>{{ position_data['C4'].team.name }}</td>
+            <td>{{ position_data['C5'].team.name }}</td>
+            <td>{{ position_data['C6'].team.name }}</td>
+            <td>{{ position_data['C7'].team.name }}</td>
+            <td>{{ position_data['C8'].team.name }}</td>
+        </tr>
+        <tr>
+            <td class="head_col">D</td>
+            <td>{{ position_data['D1'].team.name }}</td>
+            <td>{{ position_data['D2'].team.name }}</td>
+            <td>{{ position_data['D3'].team.name }}</td>
+            <td>{{ position_data['D4'].team.name }}</td>
+            <td>{{ position_data['D5'].team.name }}</td>
+            <td>{{ position_data['D6'].team.name }}</td>
+            <td>{{ position_data['D7'].team.name }}</td>
+            <td>{{ position_data['D8'].team.name }}</td>
+        </tr>
+        <tr>
+            <td class="head_col">E</td>
+            <td>{{ position_data['E1'].team.name }}</td>
+            <td>{{ position_data['E2'].team.name }}</td>
+            <td>{{ position_data['E3'].team.name }}</td>
+            <td>{{ position_data['E4'].team.name }}</td>
+            <td>{{ position_data['E5'].team.name }}</td>
+            <td>{{ position_data['E6'].team.name }}</td>
+            <td>{{ position_data['E7'].team.name }}</td>
+            <td>{{ position_data['E8'].team.name }}</td>
+        </tr>
+    </table>
+
+    <h2>Wedstrijden:</h2>
+
+    <ul>
+        {% for game in current_games %}
+        <li>veld {{ game.field }}: &nbsp;&nbsp; {{ game.team1.name }}  {{ render_winner(game.team1_id, game.winner) }}&lt;==&gt; {{ game.team2.name }}  {{ render_winner(game.team2_id, game.winner) }}</li>
+        {% endfor %}
+    </ul>
+</p>
+{% endblock %}

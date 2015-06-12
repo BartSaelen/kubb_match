@@ -21,6 +21,8 @@ class Position(Base):
     team_id = Column(Integer, ForeignKey('teams.id'))
     type = Column(String(50))
 
+    team = relationship('Team')
+
     __mapper_args__ = {
         'polymorphic_identity': 'position',
         'polymorphic_on': type
@@ -72,6 +74,10 @@ class Game(Base):
     team2_id = Column(Integer, ForeignKey('teams.id'))
     round_id = Column(Integer, ForeignKey('rounds.id'))
     winner = Column(Integer)
+    field = Column(Integer)
+
+    team1 = relationship('Team', foreign_keys=[team1_id])
+    team2 = relationship('Team', foreign_keys=[team2_id])
 
 
 class Team(Base):

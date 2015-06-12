@@ -1,0 +1,37 @@
+<html>
+<head>
+    <title>[OHC] Kubb cup</title>
+    <style>
+        table, td, th {
+            border: 1px solid #d0e4fe;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        td{
+            width: 150px;
+            height: 30px;
+            padding: 5px;
+        }
+
+        .head_col{
+            width: 15px;
+            background-color: #d0e4fe;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>[OHC] Kubb cup - {% block html_title %}Base{% endblock %}</h1>
+
+    <div>
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

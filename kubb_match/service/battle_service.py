@@ -9,12 +9,14 @@ class BattleService(object):
     def create_games(self, positions):
         games = []
         nr = int(len(positions) / 5)
+        field = 1
         for row in ('A', 'B', 'C', 'D', 'E'):
             for x in range(1, nr + 1, 2):
                 team1 = next((pos for pos in positions if pos.position == row + str(x)))
                 team2 = next((pos for pos in positions if pos.position == row + str(x + 1)))
-                game = Game(team1_id=team1.team_id, team2_id=team2.team_id)
+                game = Game(team1_id=team1.team_id, team2_id=team2.team_id, field=field)
                 games.append(game)
+                field += 1
         return games
 
     def calculate_next_round(self, round, final=False):

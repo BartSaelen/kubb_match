@@ -1,0 +1,5 @@
+{% macro render_winner(team_id, winner_id) %}
+	{% if team_id == winner_id %}
+       <span style="color: green; font-weight: bold;">*W*</span>
+	{% endif %}
+{% endmacro %}
