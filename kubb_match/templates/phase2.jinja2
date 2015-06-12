@@ -7,6 +7,16 @@
 %}
 
 {% block content %}
+<script language="JavaScript">
+function ReloadPage() {
+   location.reload();
+};
+
+$( document ).ready(function() {
+    setTimeout("ReloadPage()", 10000);
+});
+
+</script>
 <p>
     <h2>Huidige stand:</h2>
     {% if position_data %}

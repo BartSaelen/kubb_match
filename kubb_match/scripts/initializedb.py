@@ -195,7 +195,7 @@ def main(argv=sys.argv):
         db_session.add(team)
 
         team = Team()
-        team.name = '40+ nen disser'
+        team.name = 'Tis disser +'
         db_session.add(team)
 
         team = Team()

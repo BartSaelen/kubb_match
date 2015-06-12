@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import collections
 from pyramid.view import view_defaults, view_config
 from kubb_match.data.models import Round
 
@@ -41,12 +42,13 @@ class HtmlView(object):
                 games.sort(key=lambda x: x.field, reverse=False)
                 current_games[r.label] = games
                 positions = {}
+                r.positions.sort(key=lambda x: x.position, reverse=False)
                 for pos in r.positions:
                     if pos.position in positions:
                         positions[pos.position].append(pos)
                     else:
                         positions[pos.position] = [pos]
-                position_data[r.label] = positions
+                position_data[r.label] = collections.OrderedDict(sorted(positions.items()))
         else:
             current_games = None
             position_data = None

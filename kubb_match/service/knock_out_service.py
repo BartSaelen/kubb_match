@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import collections
 from kubb_match.data.models import Game, Round, KOPosition
 
 
@@ -111,6 +112,7 @@ class KnockOutService(object):
                 same_position_map[pos.position].append(pos)
             else:
                 same_position_map[pos.position] = [pos]
+        same_position_map = collections.OrderedDict(sorted(same_position_map.items()))
         for pos_key in same_position_map:
             for x in range(0, len(same_position_map[pos_key]), 2):
                 team1 = same_position_map[pos_key][x]
