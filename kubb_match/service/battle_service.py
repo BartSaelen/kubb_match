@@ -17,11 +17,12 @@ class BattleService(object):
                 games.append(game)
         return games
 
-    def calculate_next_round(self, round):
+    def calculate_next_round(self, round, final=False):
         positions = self.calculate_positions(round)
         new_round = Round()
         new_round.positions = positions
-        new_round.games = self.create_games(positions)
+        if not final:
+            new_round.games = self.create_games(positions)
         return new_round
 
     def calculate_positions(self, round):

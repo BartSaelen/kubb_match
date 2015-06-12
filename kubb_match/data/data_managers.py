@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from kubb_match.data.models import Team
+from kubb_match.data.models import Team, Round, Phase, Game
 
 
 class DataManager(object):
@@ -27,3 +27,18 @@ class DataManager(object):
 
     def get_team(self, team_id):
         return self.session.query(Team).get(team_id)
+
+    def get_rounds(self):
+        return self.session.query(Round).all()
+
+    def get_round(self, round_id):
+        return self.session.query(Round).get(round_id)
+
+    def get_game(self, game_id):
+        return self.session.query(Game).get(game_id)
+
+    def get_phases(self):
+        return self.session.query(Phase).all()
+
+    def get_phase(self, phase_id):
+        return self.session.query(Phase).get(phase_id)

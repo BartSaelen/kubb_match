@@ -38,5 +38,15 @@ def main(global_config, **settings):
     config.add_route('teams', '/teams')
     config.add_route('team', '/teams/{id:\d+}')
 
+    config.add_route('rounds', '/rounds')
+    config.add_route('round', '/rounds/{id:\d+}')
+    config.add_route('round_games', '/rounds/{id:\d+}/games')
+    config.add_route('round_game', '/rounds/{id:\d+}/games/{gid:\d+}')
+    config.add_route('round_positions', '/rounds/{id:\d+}/positions')
+
+    config.add_route('phases', '/phases')
+    config.add_route('phase', '/phases/{id:\d+}')
+    config.add_route('phase_status', '/phases/{id:\d+}/status')
+
     config.scan()
     return config.make_wsgi_app()

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from pyramid.httpexceptions import HTTPBadRequest, HTTPNotFound
 from pyramid.view import view_defaults, view_config
-from kubb_match.data.mappers import map_team
+from kubb_match.data.mappers import map_team, map_game
 from kubb_match.data.models import Team
+from kubb_match.service.tournament_service import TournamentService
 
 
 class RestView(object):
@@ -36,12 +37,12 @@ class TeamView(RestView):
                  request_method='GET',
                  permission='view',
                  renderer='itemjson')
-    def get_advies(self):
+    def get_team(self):
         tid = self.request.matchdict['id']
-        a = self.data_manager.get_team(tid)
-        if not a:
+        t = self.data_manager.get_team(tid)
+        if not t:
             return HTTPNotFound()
-        return a
+        return t
 
     def edit_team(self, t, json_body):
         t = map_team(json_body, t)
@@ -71,7 +72,7 @@ class TeamView(RestView):
     )
     def update_team(self):
         tid = self.request.matchdict.get('id')
-        t = self.data_manager.get(tid)
+        t = self.data_manager.get_team(tid)
         if not t:
             return HTTPNotFound()
         team_data = self._get_json_body()
@@ -83,3 +84,132 @@ class TeamView(RestView):
             self.request.route_path('team', id=t.id)
         return t
 
+
+@view_defaults(renderer='json', accept='application/json')
+class RoundView(RestView):
+
+    @view_config(route_name='rounds',
+                 request_method='GET',
+                 permission='view',
+                 renderer='listjson')
+    def get_rounds(self):
+        return self.data_manager.get_rounds()
+
+    @view_config(route_name='round',
+                 request_method='GET',
+                 permission='view',
+                 renderer='itemjson')
+    def get_round(self):
+        rid = self.request.matchdict['id']
+        r = self.data_manager.get_round(rid)
+        if not r:
+            return HTTPNotFound()
+        return r
+
+    @view_config(route_name='round_games',
+                 request_method='GET',
+                 permission='view',
+                 renderer='listjson')
+    def get_games(self):
+        rid = self.request.matchdict['id']
+        r = self.data_manager.get_round(rid)
+        return r.games
+
+    @view_config(route_name='round_game',
+                 request_method='GET',
+                 permission='view',
+                 renderer='itemjson')
+    def get_game(self):
+        rid = self.request.matchdict['id']
+        r = self.data_manager.get_round(rid)
+        if not r:
+            return HTTPNotFound()
+        gid = self.request.matchdict['gid']
+        game = self.data_manager.get_game(gid)
+        return game
+
+    @view_config(route_name='round_game',
+                 request_method='PUT',
+                 permission='view',
+                 renderer='itemjson')
+    def edit_game(self):
+        rid = self.request.matchdict['id']
+        r = self.data_manager.get_round(rid)
+        if not r:
+            return HTTPNotFound()
+        gid = self.request.matchdict['gid']
+        game = self.data_manager.get_game(gid)
+        game_data = self._get_json_body()
+        if 'gid' in self.request.matchdict and 'gid' not in game_data:
+            game_data['gid'] = self.request.matchdict['gid']
+        game = map_game(game_data, game)
+        game = self.data_manager.save(game)
+        return game
+
+    @view_config(route_name='round_positions',
+                 request_method='GET',
+                 permission='view',
+                 renderer='listjson')
+    def get_positions(self):
+        rid = self.request.matchdict['id']
+        r = self.data_manager.get_round(rid)
+        return r.positions
+
+@view_defaults(renderer='json', accept='application/json')
+class TournamentPhaseView(RestView):
+
+    def __init__(self, request):
+        super().__init__(request)
+        self.tournament_service = TournamentService(self.data_manager)
+
+    @view_config(route_name='phases',
+                 request_method='GET',
+                 permission='view',
+                 renderer='listjson')
+    def get_phases(self):
+        return self.data_manager.get_phases()
+
+    @view_config(route_name='phase',
+                 request_method='GET',
+                 permission='view',
+                 renderer='itemjson')
+    def get_phase(self):
+        pid = self.request.matchdict['id']
+        p = self.data_manager.get_phase(pid)
+        if not p:
+            return HTTPNotFound()
+        return p
+
+    @view_config(route_name='phase_status',
+                 request_method='POST',
+                 permission='view',
+                 renderer='itemjson')
+    def tournament_phase_status(self):
+        data = self._get_json_body()
+        pid = self.request.matchdict['id']
+        if 'status' not in data:
+            return HTTPBadRequest('status should be present')
+        else:
+            status = data['status']
+        round = None
+        p = self.data_manager.get_phase(pid)
+        if status == 'init':
+            if not p:
+                return HTTPNotFound()
+            if p.type == 'battle':
+                round = self.tournament_service.init_battle_phase(p)
+            elif p.type == 'ko':
+                round = None
+        elif status == 'next':
+            prev_round_id = data['prev_round']
+            prev_round = self.data_manager.get_round(prev_round_id)
+            round = self.tournament_service.next_battle_round(p, prev_round)
+        elif status == 'final':
+            prev_round_id = data['prev_round']
+            prev_round = self.data_manager.get_round(prev_round_id)
+            round = self.tournament_service.final_battle_round(p, prev_round)
+        else:
+            return HTTPBadRequest('invalid phase_type')
+        self.request.response.status = '201'
+        self.request.response.location = \
+            self.request.route_path('round', id=round.id)

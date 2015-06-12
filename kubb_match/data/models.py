@@ -48,10 +48,19 @@ class KOPosition(Position):
     }
 
 
+class Phase(Base):
+    __tablename__ = 'phases'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    type = Column(String())
+    rounds = relationship("Round")
+
+
 class Round(Base):
     __tablename__ = 'rounds'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    final = Column(Boolean())
+    final = Column(Boolean(), default=False)
+    played = Column(Boolean(), default=False)
+    phase_id = Column(Integer, ForeignKey('phases.id'))
     games = relationship("Game")
     positions = relationship("Position")
 
