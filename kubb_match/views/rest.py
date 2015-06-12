@@ -25,7 +25,6 @@ class RestView(object):
 
 @view_defaults(renderer='json', accept='application/json')
 class TeamView(RestView):
-
     @view_config(route_name='teams',
                  request_method='GET',
                  permission='view',
@@ -87,7 +86,6 @@ class TeamView(RestView):
 
 @view_defaults(renderer='json', accept='application/json')
 class RoundView(RestView):
-
     @view_config(route_name='rounds',
                  request_method='GET',
                  permission='view',
@@ -155,9 +153,9 @@ class RoundView(RestView):
         r = self.data_manager.get_round(rid)
         return r.positions
 
+
 @view_defaults(renderer='json', accept='application/json')
 class TournamentPhaseView(RestView):
-
     def __init__(self, request):
         super().__init__(request)
         self.tournament_service = TournamentService(self.data_manager)
@@ -199,11 +197,22 @@ class TournamentPhaseView(RestView):
             if p.type == 'battle':
                 round = self.tournament_service.init_battle_phase(p)
             elif p.type == 'ko':
-                round = None
+                p1 = self.data_manager.get_phase(1)
+                lr = next((r for r in p1.rounds if not r.played))
+                round = self.tournament_service.init_ko_phase(p, lr.positions)
+                round = round['A']
         elif status == 'next':
-            round = self.tournament_service.next_battle_round(p)
+            if p.type == 'battle':
+                round = self.tournament_service.next_battle_round(p)
+            elif p.type == 'ko':
+                round = self.tournament_service.next_ko_round(p)
+                round = round[0]
         elif status == 'final':
-            round = self.tournament_service.final_battle_round(p)
+            if p.type == 'battle':
+                round = self.tournament_service.final_battle_round(p)
+            elif p.type == 'ko':
+                round = self.tournament_service.final_ko_round(p)
+                round = round[0]
         else:
             return HTTPBadRequest('invalid phase_type')
         self.request.response.status = '201'

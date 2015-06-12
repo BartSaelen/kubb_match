@@ -1,0 +1,85 @@
+{% extends 'base.jinja2' %}
+
+{% block html_title %}ko{% endblock %}
+
+{% from "macros.jinja2" import
+	render_winner
+%}
+
+{% block content %}
+<p>
+    <h2>Huidige stand:</h2>
+    {% if position_data %}
+    <h3>A reeks</h3>
+    {% for pos_group in position_data["A"] %}
+        <table><tr>
+        <td class="head_col">{{ pos_group }}</td>
+        {% for pos in position_data["A"][pos_group] %}
+        <td>{{ pos.team.name }}</td>
+        {% endfor %}
+        </tr></table>
+    {% endfor %}
+    <h3>B reeks</h3>
+    {% for pos_group in position_data["B"] %}
+        <table><tr>
+        <td class="head_col">{{ pos_group }}</td>
+        {% for pos in position_data["B"][pos_group] %}
+        <td>{{ pos.team.name }}</td>
+        {% endfor %}
+        </tr></table>
+    {% endfor %}
+    <h3>C reeks</h3>
+    {% for pos_group in position_data["C"] %}
+        <table><tr>
+        <td class="head_col">{{ pos_group }}</td>
+        {% for pos in position_data["C"][pos_group] %}
+        <td>{{ pos.team.name }}</td>
+        {% endfor %}
+        </tr></table>
+    {% endfor %}
+    <h3>D reeks</h3>
+    {% for pos_group in position_data["D"] %}
+        <table><tr>
+        <td class="head_col">{{ pos_group }}</td>
+        {% for pos in position_data["D"][pos_group] %}
+        <td>{{ pos.team.name }}</td>
+        {% endfor %}
+        </tr></table>
+    {% endfor %}
+    {% endif %}
+
+    <h2>Wedstrijden:</h2>
+
+    {% if current_games %}
+    <table style="width: 100%; border-width: 0px">
+        <tr style="border-width: 0px"><td style="border-width: 0px">
+            A reeks
+            <ul>
+                {% for game in current_games["A"] %}
+                <li>veld {{ game.field }}: &nbsp;&nbsp; {{ game.team1.name }}  {{ render_winner(game.team1_id, game.winner) }}&lt;==&gt; {{ game.team2.name }}  {{ render_winner(game.team2_id, game.winner) }}</li>
+                {% endfor %}
+            </ul>
+            B reeks
+            <ul>
+                {% for game in current_games["B"] %}
+                <li>veld {{ game.field }}: &nbsp;&nbsp; {{ game.team1.name }}  {{ render_winner(game.team1_id, game.winner) }}&lt;==&gt; {{ game.team2.name }}  {{ render_winner(game.team2_id, game.winner) }}</li>
+                {% endfor %}
+            </ul>
+        </td><td style="border-width: 0px">
+            C reeks
+            <ul>
+                {% for game in current_games["C"] %}
+                <li>veld {{ game.field }}: &nbsp;&nbsp; {{ game.team1.name }}  {{ render_winner(game.team1_id, game.winner) }}&lt;==&gt; {{ game.team2.name }}  {{ render_winner(game.team2_id, game.winner) }}</li>
+                {% endfor %}
+            </ul>
+            D reeks
+            <ul>
+                {% for game in current_games["D"] %}
+                <li>veld {{ game.field }}: &nbsp;&nbsp; {{ game.team1.name }}  {{ render_winner(game.team1_id, game.winner) }}&lt;==&gt; {{ game.team2.name }}  {{ render_winner(game.team2_id, game.winner) }}</li>
+                {% endfor %}
+            </ul>
+        </td></tr>
+    </table>
+    {% endif %}
+</p>
+{% endblock %}

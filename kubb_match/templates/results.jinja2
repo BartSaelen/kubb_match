@@ -1,0 +1,52 @@
+{% extends 'base.jinja2' %}
+
+{% block html_title %}results{% endblock %}
+
+{% from "macros.jinja2" import
+	render_winner
+%}
+
+{% block content %}
+<p>
+    <h2>Huidige stand:</h2>
+    {% if position_data %}
+    <h3>A reeks</h3>
+    {% for pos_group in position_data["A"] %}
+        <table><tr>
+        <td class="head_col">{{ pos_group }}</td>
+        {% for pos in position_data["A"][pos_group] %}
+        <td>{{ pos.team.name }}</td>
+        {% endfor %}
+        </tr></table>
+    {% endfor %}
+    <h3>B reeks</h3>
+    {% for pos_group in position_data["B"] %}
+        <table><tr>
+        <td class="head_col">{{ pos_group }}</td>
+        {% for pos in position_data["B"][pos_group] %}
+        <td>{{ pos.team.name }}</td>
+        {% endfor %}
+        </tr></table>
+    {% endfor %}
+    <h3>C reeks</h3>
+    {% for pos_group in position_data["C"] %}
+        <table><tr>
+        <td class="head_col">{{ pos_group }}</td>
+        {% for pos in position_data["C"][pos_group] %}
+        <td>{{ pos.team.name }}</td>
+        {% endfor %}
+        </tr></table>
+    {% endfor %}
+    <h3>D reeks</h3>
+    {% for pos_group in position_data["D"] %}
+        <table><tr>
+        <td class="head_col">{{ pos_group }}</td>
+        {% for pos in position_data["D"][pos_group] %}
+        <td>{{ pos.team.name }}</td>
+        {% endfor %}
+        </tr></table>
+    {% endfor %}
+    {% endif %}
+
+</p>
+{% endblock %}

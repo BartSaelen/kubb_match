@@ -52,5 +52,10 @@ def main(global_config, **settings):
     config.add_route('phase1', '/battle')
     config.add_route('phase1-admin', '/battle-admin')
 
+    config.add_route('phase2', '/ko')
+    config.add_route('phase2-admin', '/ko-admin')
+
+    config.add_route('results', '/results')
+
     config.scan()
     return config.make_wsgi_app()

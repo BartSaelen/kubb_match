@@ -1,0 +1,89 @@
+{% extends 'base.jinja2' %}
+
+{% block html_title %}ko admin{% endblock %}
+
+{% from "macros.jinja2" import
+	render_winner
+%}
+
+{% block content %}
+<script language="JavaScript">
+$( document ).ready(function() {
+
+    $( "#init_button" ).bind( "click", function() {
+        data = '{"status": "init"}'
+        $.post( "/phases/2/status", data, function( ) {
+          location.reload(true);
+        });
+    });
+
+    $( "#next_button" ).bind( "click", function() {
+        data = '{"status": "next"}'
+        $.post( "/phases/2/status", data, function( ) {
+          location.reload(true);
+        });
+    });
+
+    $( "#final_button" ).bind( "click", function() {
+        data = '{"status": "final"}'
+        $.post( "/phases/2/status", data, function( ) {
+          location.reload(true);
+        });
+    });
+
+    make_winner= function(round_id, game_id, winner_id){
+        data = JSON.stringify ({"winner": winner_id})
+        url = "/rounds/" + round_id + "/games/" + game_id
+        success = function( ) {
+          location.reload(true);
+        }
+        $.ajax({
+          type: "PUT",
+          url: url,
+          data: data,
+          success: success,
+          contentType: "application/json",
+          dataType: "json"
+        });
+    }
+
+});
+
+</script>
+<div>
+    <div>
+        <button id="init_button">INIT</button>
+        <button id="next_button">NEXT</button>
+    </div>
+</div>
+<p>
+    <h2>Wedstrijden:</h2>
+
+    {% if current_games %}
+    A reeks
+    <ul>
+        {% for game in current_games["A"] %}
+        <li>veld {{ game.field }}: &nbsp;&nbsp; {{ game.team1.name }}  {{ render_winner(game.team1_id, game.winner) }} <button onclick="make_winner({{ current_round['A'] }}, {{ game.id }} , {{ game.team1_id }})">winner!</button>&lt;==&gt; {{ game.team2.name }}  {{ render_winner(game.team2_id, game.winner) }} <button onclick="make_winner({{ current_round['A'] }}, {{ game.id }} , {{ game.team2_id }})">winner!</button></li>
+        {% endfor %}
+    </ul>
+    B reeks
+    <ul>
+        {% for game in current_games["B"] %}
+        <li>veld {{ game.field }}: &nbsp;&nbsp; {{ game.team1.name }}  {{ render_winner(game.team1_id, game.winner) }} <button onclick="make_winner({{ current_round['B'] }}, {{ game.id }} , {{ game.team1_id }})">winner!</button>&lt;==&gt; {{ game.team2.name }}  {{ render_winner(game.team2_id, game.winner) }} <button onclick="make_winner({{ current_round['B'] }}, {{ game.id }} , {{ game.team2_id }})">winner!</button></li>
+        {% endfor %}
+    </ul>
+    C reeks
+    <ul>
+        {% for game in current_games["C"] %}
+        <li>veld {{ game.field }}: &nbsp;&nbsp; {{ game.team1.name }}  {{ render_winner(game.team1_id, game.winner) }} <button onclick="make_winner({{ current_round['C'] }}, {{ game.id }} , {{ game.team1_id }})">winner!</button>&lt;==&gt; {{ game.team2.name }}  {{ render_winner(game.team2_id, game.winner) }} <button onclick="make_winner({{ current_round['C'] }}, {{ game.id }} , {{ game.team2_id }})">winner!</button></li>
+        {% endfor %}
+    </ul>
+    D reeks
+    <ul>
+        {% for game in current_games["D"] %}
+        <li>veld {{ game.field }}: &nbsp;&nbsp; {{ game.team1.name }}  {{ render_winner(game.team1_id, game.winner) }} <button onclick="make_winner({{ current_round['D'] }}, {{ game.id }} , {{ game.team1_id }})">winner!</button>&lt;==&gt; {{ game.team2.name }}  {{ render_winner(game.team2_id, game.winner) }} <button onclick="make_winner({{ current_round['D'] }}, {{ game.id }} , {{ game.team2_id }})">winner!</button></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</p>
+{% endblock %}

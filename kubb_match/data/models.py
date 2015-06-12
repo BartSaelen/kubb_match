@@ -62,6 +62,7 @@ class Round(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     final = Column(Boolean(), default=False)
     played = Column(Boolean(), default=False)
+    label = Column(String())
     phase_id = Column(Integer, ForeignKey('phases.id'))
     games = relationship("Game")
     positions = relationship("Position")

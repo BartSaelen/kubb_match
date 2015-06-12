@@ -7,6 +7,7 @@ class KnockOutService(object):
         pass
 
     def create_initial_rounds(self, final_battle_positions):
+        field = 1
         a_games = []
         a_positions = []
         b_games = []
@@ -19,59 +20,67 @@ class KnockOutService(object):
         for x in range(1, nr + 1, 1):
             team1 = next((pos for pos in final_battle_positions if pos.position == 'A' + str(x)))
             team2 = next((pos for pos in final_battle_positions if pos.position == 'B' + str(x)))
-            game = Game(team1_id=team1.team_id, team2_id=team2.team_id)
+            game = Game(team1_id=team1.team_id, team2_id=team2.team_id, field=field)
             a_games.append(game)
             position1 = KOPosition(team_id=team1.team_id, position=16, same_position=16)
             position2 = KOPosition(team_id=team2.team_id, position=16, same_position=16)
             a_positions.append(position1)
             a_positions.append(position2)
+            field += 1
         for x in range(1, nr + 1, 2):
             team1 = next((pos for pos in final_battle_positions if pos.position == 'C' + str(x)))
             team2 = next((pos for pos in final_battle_positions if pos.position == 'C' + str(x + 1)))
-            game = Game(team1_id=team1.team_id, team2_id=team2.team_id)
+            game = Game(team1_id=team1.team_id, team2_id=team2.team_id, field=field)
             b_games.append(game)
             position1 = KOPosition(team_id=team1.team_id, position=24, same_position=8)
             position2 = KOPosition(team_id=team2.team_id, position=24, same_position=8)
             b_positions.append(position1)
             b_positions.append(position2)
+            field += 1
         for x in range(1, nr + 1, 2):
             team1 = next((pos for pos in final_battle_positions if pos.position == 'D' + str(x)))
             team2 = next((pos for pos in final_battle_positions if pos.position == 'D' + str(x + 1)))
-            game = Game(team1_id=team1.team_id, team2_id=team2.team_id)
+            game = Game(team1_id=team1.team_id, team2_id=team2.team_id, field=field)
             c_games.append(game)
             position1 = KOPosition(team_id=team1.team_id, position=32, same_position=8)
             position2 = KOPosition(team_id=team2.team_id, position=32, same_position=8)
             c_positions.append(position1)
             c_positions.append(position2)
+            field += 1
         for x in range(1, nr + 1, 2):
             team1 = next((pos for pos in final_battle_positions if pos.position == 'E' + str(x)))
             team2 = next((pos for pos in final_battle_positions if pos.position == 'E' + str(x + 1)))
-            game = Game(team1_id=team1.team_id, team2_id=team2.team_id)
+            game = Game(team1_id=team1.team_id, team2_id=team2.team_id, field=field)
             d_games.append(game)
             position1 = KOPosition(team_id=team1.team_id, position=40, same_position=8)
             position2 = KOPosition(team_id=team2.team_id, position=40, same_position=8)
             d_positions.append(position1)
             d_positions.append(position2)
+            field += 1
         a_round = Round()
+        a_round.label = 'A'
         a_round.games = a_games
         a_round.positions = a_positions
         b_round = Round()
+        b_round.label = 'B'
         b_round.games = b_games
         b_round.positions = b_positions
         c_round = Round()
+        c_round.label = 'C'
         c_round.games = c_games
         c_round.positions = c_positions
         d_round = Round()
+        d_round.label = 'D'
         d_round.games = d_games
         d_round.positions = d_positions
         return {'A': a_round, 'B': b_round, 'C': c_round, 'D': d_round}
 
-    def calculate_next_round(self, round):
+    def calculate_next_round(self, round, field):
         positions = self.calculate_positions(round)
         new_round = Round()
         new_round.positions = positions
         if positions[0].same_position > 1:
-            new_round.games = self.create_games(positions)
+            new_round.games = self.create_games(positions, field)
             new_round.final = False
         else:
             new_round.final = True
@@ -94,7 +103,7 @@ class KnockOutService(object):
             positions.append(position2)
         return positions
 
-    def create_games(self, positions):
+    def create_games(self, positions, field):
         games = []
         same_position_map = {}
         for pos in positions:
@@ -106,6 +115,7 @@ class KnockOutService(object):
             for x in range(0, len(same_position_map[pos_key]), 2):
                 team1 = same_position_map[pos_key][x]
                 team2 = same_position_map[pos_key][x + 1]
-                game = Game(team1_id=team1.team_id, team2_id=team2.team_id)
+                game = Game(team1_id=team1.team_id, team2_id=team2.team_id, field=field)
                 games.append(game)
+                field += 1
         return games
