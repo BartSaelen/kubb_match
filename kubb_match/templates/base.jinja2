@@ -25,6 +25,9 @@
             list-style-type: none;
         }
     </style>
+    {% block js_files %}
+    <script src="{{request.static_path('kubb_match:static/js/jquery-1.11.3.min.js')}}"></script>
+    {% endblock %}
 </head>
 <body>
     <h1>[OHC] Kubb cup - {% block html_title %}Base{% endblock %}</h1>
@@ -33,5 +36,6 @@
         {% block content %}
         {% endblock %}
     </div>
+
 </body>
 </html>

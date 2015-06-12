@@ -201,13 +201,9 @@ class TournamentPhaseView(RestView):
             elif p.type == 'ko':
                 round = None
         elif status == 'next':
-            prev_round_id = data['prev_round']
-            prev_round = self.data_manager.get_round(prev_round_id)
-            round = self.tournament_service.next_battle_round(p, prev_round)
+            round = self.tournament_service.next_battle_round(p)
         elif status == 'final':
-            prev_round_id = data['prev_round']
-            prev_round = self.data_manager.get_round(prev_round_id)
-            round = self.tournament_service.final_battle_round(p, prev_round)
+            round = self.tournament_service.final_battle_round(p)
         else:
             return HTTPBadRequest('invalid phase_type')
         self.request.response.status = '201'

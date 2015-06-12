@@ -49,7 +49,8 @@ def main(global_config, **settings):
     config.add_route('phase_status', '/phases/{id:\d+}/status')
 
     # HTML routes
-    config.add_route('phase1', '/voormiddag')
+    config.add_route('phase1', '/battle')
+    config.add_route('phase1-admin', '/battle-admin')
 
     config.scan()
     return config.make_wsgi_app()

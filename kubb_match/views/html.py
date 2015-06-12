@@ -30,7 +30,13 @@ class HtmlView(object):
 
     # ADMIN
 
-    @view_config(route_name='admin', renderer='admin.jinja2', permission='admin')
+    @view_config(route_name='phase1-admin', renderer='phase1-admin.jinja2', permission='admin')
     def admin(self):
-
-        return {}
+        p = self.data_manager.get_phase(1)
+        if len(p.rounds) > 0:
+            current_round = next((r for r in p.rounds if not r.played))
+            current_games = current_round.games
+            current_games.sort(key=lambda x: x.field, reverse=False)
+        else:
+            current_games = None
+        return {'current_games': current_games, 'current_round': current_round}

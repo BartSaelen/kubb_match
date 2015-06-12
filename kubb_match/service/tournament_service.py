@@ -33,7 +33,8 @@ class TournamentService(object):
         self.data_manager.save(phase)
         return round1
 
-    def next_battle_round(self, phase, prev_round):
+    def next_battle_round(self, phase):
+        prev_round = next((r for r in phase.rounds if not r.played))
         round = self.battle_service.calculate_next_round(prev_round)
 
         prev_round.played = True
@@ -43,7 +44,8 @@ class TournamentService(object):
         self.data_manager.save(phase)
         return round
 
-    def final_battle_round(self, phase, prev_round):
+    def final_battle_round(self, phase):
+        prev_round = next((r for r in phase.rounds if not r.played))
         final_round = self.battle_service.calculate_next_round(prev_round, final=True)
         final_round.final = True
 

@@ -1,0 +1,75 @@
+{% extends 'base.jinja2' %}
+
+{% block html_title %}battle admin{% endblock %}
+
+{% from "macros.jinja2" import
+	render_winner
+%}
+
+{% block content %}
+<script language="JavaScript">
+$( document ).ready(function() {
+
+    $( "#init_button" ).bind( "click", function() {
+        data = '{"status": "init"}'
+        $.post( "/phases/1/status", data, function( ) {
+          location.reload(true);
+        });
+    });
+
+    $( "#next_button" ).bind( "click", function() {
+        data = '{"status": "next"}'
+        $.post( "/phases/1/status", data, function( ) {
+          location.reload(true);
+        });
+    });
+
+    $( "#final_button" ).bind( "click", function() {
+        data = '{"status": "final"}'
+        $.post( "/phases/1/status", data, function( ) {
+          location.reload(true);
+        });
+    });
+
+    make_winner= function(game_id, winner_id){
+        data = JSON.stringify ({"winner": winner_id})
+        url = "/rounds/{{ current_round.id }}/games/" + game_id
+        success = function( ) {
+          location.reload(true);
+        }
+        $.ajax({
+          type: "PUT",
+          url: url,
+          data: data,
+          success: success,
+          contentType: "application/json",
+          dataType: "json"
+        });
+    }
+
+});
+
+</script>
+<div>
+    <div>
+        <button id="init_button">INIT</button>
+        <button id="next_button">NEXT</button>
+        <button id="final_button">FINAL</button>
+    </div>
+</div>
+<p>
+    <h2>Wedstrijden:</h2>
+
+    {% if current_games %}
+    <ul>
+        {% for game in current_games %}
+        <li>veld {{ game.field }}: &nbsp;&nbsp;
+            {{ game.team1.name }}  {{ render_winner(game.team1_id, game.winner) }}  <button onclick="make_winner({{ game.id }} , {{ game.team1_id }})">winner!</button>
+            &lt;==&gt;
+            {{ game.team2.name }}  {{ render_winner(game.team2_id, game.winner) }}  <button onclick="make_winner({{ game.id }} , {{ game.team2_id }})">winner!</button>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</p>
+{% endblock %}

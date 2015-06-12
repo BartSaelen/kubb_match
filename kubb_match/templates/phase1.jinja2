@@ -1,6 +1,6 @@
 {% extends 'base.jinja2' %}
 
-{% block html_title %}voormiddag{% endblock %}
+{% block html_title %}battle{% endblock %}
 
 {% from "macros.jinja2" import
 	render_winner
@@ -9,7 +9,7 @@
 {% block content %}
 <p>
     <h2>Huidige stand:</h2>
-
+    {% if position_data %}
     <table>
         <tr>
             <td class="head_col">A</td>
@@ -67,13 +67,16 @@
             <td>{{ position_data['E8'].team.name }}</td>
         </tr>
     </table>
+    {% endif %}
 
     <h2>Wedstrijden:</h2>
 
+    {% if current_games %}
     <ul>
         {% for game in current_games %}
         <li>veld {{ game.field }}: &nbsp;&nbsp; {{ game.team1.name }}  {{ render_winner(game.team1_id, game.winner) }}&lt;==&gt; {{ game.team2.name }}  {{ render_winner(game.team2_id, game.winner) }}</li>
         {% endfor %}
     </ul>
+    {% endif %}
 </p>
 {% endblock %}
