@@ -39,4 +39,5 @@ class HtmlView(object):
             current_games.sort(key=lambda x: x.field, reverse=False)
         else:
             current_games = None
+            current_round = None
         return {'current_games': current_games, 'current_round': current_round}
