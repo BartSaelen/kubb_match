@@ -12,6 +12,8 @@ class BattleService(object):
         field = 1
         for row in ('A', 'B', 'C', 'D', 'E'):
             for x in range(1, nr + 1, 2):
+                print(row + str(x))
+                print(row + str(x + 1))
                 team1 = next((pos for pos in positions if pos.position == row + str(x)))
                 team2 = next((pos for pos in positions if pos.position == row + str(x + 1)))
                 game = Game(team1_id=team1.team_id, team2_id=team2.team_id, field=field)
@@ -49,13 +51,20 @@ class BattleService(object):
         key = pos.position
         if key[0] == 'A':
             key = key
+            row = key[0]
         else:
             row = self.move_row_up(key[0])
             pos = int(key[1])
             key = row + str(pos)
-            if key in [pos.position for pos in positions]:
-                pos = pos + 1 if pos_1 else pos - 1
-                key = row + str(pos)
+            #if key in [pos.position for pos in positions]:
+            #    pos = pos + 1 if pos_1 else pos - 1
+            #    key = row + str(pos)
+        pos = int(key[1])
+        while key in [pos.position for pos in positions]:
+            pos += 1
+            if pos > 8:
+                pos -= 8
+            key = row + str(pos)
         grid_pos = GridPosition(position=key, team_id=winner_id)
         return grid_pos
 
