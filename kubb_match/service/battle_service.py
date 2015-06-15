@@ -32,7 +32,9 @@ class BattleService(object):
     def calculate_positions(self, round):
         positions = []
         losers = []
-        for game in round.games:
+        games = round.games
+        games.sort(key=lambda x: x.field, reverse=False)
+        for game in games:
             if game.winner == game.team1_id:
                 grid_pos = self.position_winner(round, positions, game.team1_id, True)
                 positions.append(grid_pos)

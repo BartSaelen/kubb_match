@@ -55,7 +55,7 @@ def main(argv=sys.argv):
         db_session.add(team)
 
         team = Team()
-        team.name = 'Kubb met Appelmoes'
+        team.name = 'Toemetoch'
         db_session.add(team)
 
         team = Team()
@@ -63,11 +63,11 @@ def main(argv=sys.argv):
         db_session.add(team)
 
         team = Team()
-        team.name = 'Klimop'
+        team.name = 'Kaatjes Kubbmaten'
         db_session.add(team)
 
         team = Team()
-        team.name = 'De Dissers'
+        team.name = 'Kubb met Appelmoes'
         db_session.add(team)
 
         team = Team()
@@ -79,7 +79,23 @@ def main(argv=sys.argv):
         db_session.add(team)
 
         team = Team()
-        team.name = 'Kaatjes Kubbmaten'
+        team.name = 'Klimop'
+        db_session.add(team)
+
+        team = Team()
+        team.name = 'Haldisse'
+        db_session.add(team)
+
+        team = Team()
+        team.name = 'de Kubbvaders'
+        db_session.add(team)
+
+        team = Team()
+        team.name = 'Team Awesome'
+        db_session.add(team)
+
+        team = Team()
+        team.name = 'Kubb Monsieur'
         db_session.add(team)
 
         team = Team()
@@ -87,7 +103,7 @@ def main(argv=sys.argv):
         db_session.add(team)
 
         team = Team()
-        team.name = 'Oude Ketel'
+        team.name = 'upperkubb'
         db_session.add(team)
 
         team = Team()
@@ -99,38 +115,6 @@ def main(argv=sys.argv):
         db_session.add(team)
 
         team = Team()
-        team.name = 'de Kubbvaders'
-        db_session.add(team)
-
-        team = Team()
-        team.name = 'the Ladies'
-        db_session.add(team)
-
-        team = Team()
-        team.name = 'Team Awesome'
-        db_session.add(team)
-
-        team = Team()
-        team.name = 'Ge zijt zelf een kubbploeg'
-        db_session.add(team)
-
-        team = Team()
-        team.name = 'Toemetoch'
-        db_session.add(team)
-
-        team = Team()
-        team.name = 'The Pink Panthers 1'
-        db_session.add(team)
-
-        team = Team()
-        team.name = 'The Pink Panthers 2'
-        db_session.add(team)
-
-        team = Team()
-        team.name = 'Woodstock'
-        db_session.add(team)
-
-        team = Team()
         team.name = 'Landelijke Gilde Heist'
         db_session.add(team)
 
@@ -139,55 +123,7 @@ def main(argv=sys.argv):
         db_session.add(team)
 
         team = Team()
-        team.name = 'The pink pussies'
-        db_session.add(team)
-
-        team = Team()
         team.name = 'Ploeg G'
-        db_session.add(team)
-
-        team = Team()
-        team.name = 'OLHAM'
-        db_session.add(team)
-
-        team = Team()
-        team.name = 'Haldisse'
-        db_session.add(team)
-
-        team = Team()
-        team.name = 'Kubb Monsieur'
-        db_session.add(team)
-
-        team = Team()
-        team.name = '[EZR]Kubbmaten'
-        db_session.add(team)
-
-        team = Team()
-        team.name = 'upperkubb'
-        db_session.add(team)
-
-        team = Team()
-        team.name = 'Cafe den hoek'
-        db_session.add(team)
-
-        team = Team()
-        team.name = 'de Berthoutkubbers'
-        db_session.add(team)
-
-        team = Team()
-        team.name = 'De Chouffkes'
-        db_session.add(team)
-
-        team = Team()
-        team.name = '2 girls and a Kubb'
-        db_session.add(team)
-
-        team = Team()
-        team.name = 'Woordspelingen zijn voor losers!'
-        db_session.add(team)
-
-        team = Team()
-        team.name = 'De hete Marjetten'
         db_session.add(team)
 
         team = Team()
@@ -195,11 +131,27 @@ def main(argv=sys.argv):
         db_session.add(team)
 
         team = Team()
+        team.name = 'De Dissers'
+        db_session.add(team)
+
+        team = Team()
         team.name = 'Tis disser +'
         db_session.add(team)
 
         team = Team()
-        team.name = 'De leiding van\'t Centrum '
+        team.name = 'Woodstock'
+        db_session.add(team)
+
+        team = Team()
+        team.name = 'Pleinies'
+        db_session.add(team)
+
+        team = Team()
+        team.name = 'Oude Ketel'
+        db_session.add(team)
+
+        team = Team()
+        team.name = 'Cafe den hoek'
         db_session.add(team)
 
         team = Team()
@@ -207,6 +159,53 @@ def main(argv=sys.argv):
         db_session.add(team)
 
         team = Team()
-        team.name = 'Pleinies'
+        team.name = 'De Chouffkes'
         db_session.add(team)
 
+        team = Team()
+        team.name = 'the Ladies'
+        db_session.add(team)
+
+        team = Team()
+        team.name = 'Woordspelingen zijn voor losers!'
+        db_session.add(team)
+
+        team = Team()
+        team.name = 'Ge zijt zelf een kubbploeg'
+        db_session.add(team)
+
+        team = Team()
+        team.name = '[EZR]Kubbmaten'
+        db_session.add(team)
+
+        team = Team()
+        team.name = 'The Pink Panthers 1'
+        db_session.add(team)
+
+        team = Team()
+        team.name = 'OLHAM'
+        db_session.add(team)
+
+        team = Team()
+        team.name = 'The Pink Panthers 2'
+        db_session.add(team)
+
+        team = Team()
+        team.name = 'De hete Marjetten'
+        db_session.add(team)
+
+        team = Team()
+        team.name = '2 girls and a Kubb'
+        db_session.add(team)
+
+        team = Team()
+        team.name = 'Op veld 1'
+        db_session.add(team)
+
+        team = Team()
+        team.name = 'The pink pussies'
+        db_session.add(team)
+
+        team = Team()
+        team.name = 'de Berthoutkubbers'
+        db_session.add(team)
